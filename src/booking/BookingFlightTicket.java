@@ -29,7 +29,8 @@ public class BookingFlightTicket {
 
 		for (int i = 0; i < listOfAvailableFlights.size(); i++) {
 			listOfAvailableFlights.get(i);
-			int flightIdFromList = Flight.getFlight_id();
+			int flightIdFromList = listOfAvailableFlights.get(i).getFlight_id();
+			System.out.println( listOfAvailableFlights.get(i).getFlight_id());
 			String flightClassFromList = listOfAvailableFlights.get(i).getFlightClass();
 			char seatRowFromList = listOfAvailableFlights.get(i).getSeatRow();
 			int seatNumberFromList = listOfAvailableFlights.get(i).getSeatRow();
