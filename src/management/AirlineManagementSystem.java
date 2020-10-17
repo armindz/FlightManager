@@ -1,9 +1,9 @@
-package creator;
+package management;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import manager.Airline;
+import objects.Airline;
 
 public class AirlineManagementSystem {
 

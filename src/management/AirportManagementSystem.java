@@ -1,8 +1,9 @@
-package creator;
+package management;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import manager.Airport;
+
+import objects.Airport;
 
 public class AirportManagementSystem {
 	Airport airport;

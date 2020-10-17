@@ -3,8 +3,8 @@ package booking;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import manager.Flight;
-import creator.FlightManagementSystem;
+import management.FlightManagementSystem;
+import objects.Flight;
 
 public class BookingFlightTicket {
 

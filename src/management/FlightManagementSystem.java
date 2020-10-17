@@ -1,13 +1,13 @@
-package creator;
+package management;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
 import booking.BookingFlightTicket;
-import manager.Airline;
-import manager.Airport;
-import manager.Flight;
+import objects.Airline;
+import objects.Airport;
+import objects.Flight;
 public class FlightManagementSystem {
 
 	private Flight flight;

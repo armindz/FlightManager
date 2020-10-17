@@ -1,12 +1,12 @@
 import java.util.Calendar;
 import java.util.Date;
 
-import creator.AirlineManagementSystem;
-import creator.AirportManagementSystem;
-import creator.FlightManagementSystem;
-import manager.Airline;
-import manager.Airport;
-import manager.Flight;
+import management.AirlineManagementSystem;
+import management.AirportManagementSystem;
+import management.FlightManagementSystem;
+import objects.Airline;
+import objects.Airport;
+import objects.Flight;
 
 public class FlightManagerMain {
 
