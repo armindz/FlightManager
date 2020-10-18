@@ -4,8 +4,9 @@ import java.util.Calendar;
 
 public class Flight {
 	
-	private Airline airline;
-	private Airport airport;
+	private String airlineCodename;
+	private String airportCodename;
+	private String destinationAirportCodename;
 	private String flightClass;
 	private Calendar dateOfFlight;
 	private char seatRow;
@@ -13,10 +14,11 @@ public class Flight {
 	private double flightPrice;
 	private static int flightId = 0;
 	
-	public Flight (Airline airline, Airport airport, String flightClass, Calendar dateOfFlight, char seatRow, int seatNumber, double flightPrice) {
+	public Flight (String airlineCodename, String airportCodename, String destinationAirportCodename, String flightClass, Calendar dateOfFlight, char seatRow, int seatNumber, double flightPrice) {
 		
-		this.airline = airline;
-		this.airport = airport;
+		this.airlineCodename = airlineCodename;
+		this.airportCodename = airportCodename;
+		this.destinationAirportCodename = destinationAirportCodename;
 		this.flightClass = flightClass;
 		this.dateOfFlight = dateOfFlight;
 		this.seatRow = seatRow;
@@ -25,28 +27,36 @@ public class Flight {
 		flightId++;
 	}
 
+	public String getAirlineCodename() {
+		return airlineCodename;
+	}
+
+	public void setAirlineCodename(String airlineCodename) {
+		this.airlineCodename = airlineCodename;
+	}
+
+	public String getAirportCodename() {
+		return airportCodename;
+	}
+
+	public void setAirportCodename(String airportCodename) {
+		this.airportCodename = airportCodename;
+	}
+
+	public String getDestinationAirportCodename() {
+		return destinationAirportCodename;
+	}
+
+	public void setDestinationAirportCodename(String destinationAirportCodename) {
+		this.destinationAirportCodename = destinationAirportCodename;
+	}
+
 	public static int getFlight_id() {
 		return flightId;
 	}
 
 	public static void setFlight_id(int flight_id) {
 		Flight.flightId = flight_id;
-	}
-
-	public Airline getAirline() {
-		return airline;
-	}
-
-	public void setAirline(Airline airline) {
-		this.airline = airline;
-	}
-
-	public Airport getAirport() {
-		return airport;
-	}
-
-	public void setAirport(Airport airport) {
-		this.airport = airport;
 	}
 
 	public String getFlightClass() {
@@ -91,9 +101,12 @@ public class Flight {
 
 	@Override
 	public String toString() {
-		return "\nFlight [airline=" + airline + "\nairport=" + airport + "\nflightClass=" + flightClass
-				+ ", \ndateOfFlight=" + dateOfFlight.getTime() + ", \nseatRow=" + seatRow + ", \nseatNumber=" + seatNumber
-				+ ", \nflightPrice=" + flightPrice + "]";
+		return "Flight [airlineCodename=" + airlineCodename + ", airportCodename=" + airportCodename
+				+ ", destinationAirportCodename=" + destinationAirportCodename + ", flightClass=" + flightClass
+				+ ", dateOfFlight=" + dateOfFlight.getTime() + ", seatRow=" + seatRow + ", seatNumber=" + seatNumber
+				+ ", flightPrice=" + flightPrice + "]";
 	}
+
+
 	
 }

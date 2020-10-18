@@ -25,9 +25,10 @@ public class AirlineManagementSystem {
 			System.out.println("Please type airline country!");
 			airlineCountry = scan.next();
 
-			Airline airline = new Airline(airlineCodename, airlineCallsign, airlineCountry);
+			
 
 			if (isAirlineDataUnique() && isAirlineCodenameValid()) {
+				Airline airline = new Airline(airlineCodename, airlineCallsign, airlineCountry);
 				listOfAirlines.add(airline);
 			} else {
 				System.out.println("Data not unique or airline codename not valid.");

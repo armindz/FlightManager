@@ -15,7 +15,14 @@ public class FlightManagerMain {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		BookingFlightTicket bft = new BookingFlightTicket();
+		
+		FlightManagementSystem fms = new FlightManagementSystem();
+		while (1>0) {
+		fms.createFlight();
+		System.out.println(fms.getListOfFlights());
+		
+		}
+		/*BookingFlightTicket bft = new BookingFlightTicket();
 		AirlineManagementSystem ams = new AirlineManagementSystem();
 
 		Airline wizz = new Airline("WZZ", "Wizzair", "HUNGARY");
@@ -73,6 +80,6 @@ public class FlightManagerMain {
 		bft.bookAFlight(1, "Economy", 'A', 2);
 		System.out.println(bft.getListOfBookedFlights());
 		
-
+*/
 	}
 }

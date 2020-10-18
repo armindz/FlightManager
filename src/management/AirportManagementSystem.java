@@ -32,11 +32,12 @@ public class AirportManagementSystem {
 			System.out.println("Please type airport country!");
 			airportCountry = scan.next();
 
-			Airport airport = new Airport(airportCodename, airportFullname, airportType, airportCity, airportCountry);
-			if (isAirportDataUnique()) {
+			
+			if (isAirportDataUnique() && isAirportCodenameValid()) {
+				Airport airport = new Airport(airportCodename, airportFullname, airportType, airportCity, airportCountry);
 				listOfAirports.add(airport);
 			} else {
-				System.out.println("Data not unique");
+				System.out.println("Data not unique or airport codename not valid");
 			}
 		} catch (Exception e) {
 			System.out.println("Something went wrong!");
@@ -69,7 +70,7 @@ public class AirportManagementSystem {
 		return false;
 	}
 
-	public ArrayList<Airport> getListOfAirlines() {
+	public ArrayList<Airport> getListOfAirports() {
 
 		return listOfAirports;
 	}
