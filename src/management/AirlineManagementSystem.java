@@ -3,12 +3,14 @@ package management;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import database.AirlineDatabase;
 import objects.Airline;
 
 public class AirlineManagementSystem {
 
 	Airline airline;
 	private static ArrayList<Airline> listOfAirlines = new ArrayList<Airline>();
+	AirlineDatabase airlinedatabase = new AirlineDatabase();
 	private String airlineCodename;
 	private String airlineCallsign;
 	private String airlineCountry;
@@ -83,6 +85,7 @@ public class AirlineManagementSystem {
 
 	public void addAirlineToDatabase() {
 
+		airlinedatabase.storeToDatabase(airline);
 	}
 
 	public void removeAirlineFromDatabase() {

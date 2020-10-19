@@ -3,11 +3,13 @@ package management;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import database.AirportDatabase;
 import objects.Airport;
 
 public class AirportManagementSystem {
 	Airport airport;
 	private static ArrayList<Airport> listOfAirports = new ArrayList<Airport>();
+	AirportDatabase ad = new AirportDatabase();
 	private String airportCodename;
 	private String airportFullname;
 	private String airportType;
@@ -87,8 +89,9 @@ public class AirportManagementSystem {
 
 	}
 
-	public void addAirportToDatabase() {
+	public void addAirportToDatabase(Airport airport) {
 
+		ad.storeToDatabase(airport);
 	}
 
 	public void removeAirportFromDatabase() {

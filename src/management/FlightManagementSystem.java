@@ -7,6 +7,9 @@ import java.util.Scanner;
 import booking.BookingFlightTicket;
 
 import objects.Flight;
+import database.AirlineDatabase;
+import database.AirportDatabase;
+import database.FlightDatabase;
 
 public class FlightManagementSystem {
 
@@ -16,6 +19,7 @@ public class FlightManagementSystem {
 	private static ArrayList<Flight> listOfBookedFlights = BookingFlightTicket.getListOfBookedFlights();
 	AirlineManagementSystem airlinems = new AirlineManagementSystem();
 	AirportManagementSystem airportms = new AirportManagementSystem();
+	FlightDatabase fd = new FlightDatabase();
 	private String airlineCodename;
 	private String airportCodename;
 	private String destinationAirportCodename;
@@ -156,8 +160,10 @@ public class FlightManagementSystem {
 		FlightManagementSystem.listOfAvailableFlights = listOfAvailableFlights;
 	}
 
-	public void addFlightToDatabase() {
-
+	public void addFlightToDatabase(Flight flight) {
+		
+		fd.storeToDatabase(flight);
+		
 	}
 
 	public void removeFlightFromDatabase() {
