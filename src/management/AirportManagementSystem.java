@@ -4,53 +4,68 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import database.AirportDatabase;
-import objects.Airport;
+import models.Airline;
+import models.Airport;
 
 public class AirportManagementSystem {
-	Airport airport;
+	
 	private static ArrayList<Airport> listOfAirports = new ArrayList<Airport>();
 	AirportDatabase ad = new AirportDatabase();
-	private String airportCodename;
-	private String airportFullname;
-	private String airportType;
-	private String airportCity;
-	private String airportCountry;
 	private final int AIRPORT_CODENAME_LENGTH = 3;
 
-	public void createAirline() {
+	public void createAirport() {
 
-		Scanner scan = new Scanner(System.in);
+		
 
 		try {
-
+			Scanner scan = new Scanner(System.in);
 			System.out.println("Please type airport codename!");
-			airportCodename = scan.next();
+			String airportCodename = scan.next();
 			System.out.println("Please type airport fullname!");
-			airportFullname = scan.next();
+			String airportFullname = scan.next();
 			System.out.println("Please type airport type!");
-			airportType = scan.next();
+			String airportType = scan.next();
 			System.out.println("Please type airport city!");
-			airportCity = scan.next();
+			String airportCity = scan.next();
 			System.out.println("Please type airport country!");
-			airportCountry = scan.next();
+			String airportCountry = scan.next();
 
 			
-			if (isAirportDataUnique() && isAirportCodenameValid()) {
+			if (isAirportDataUnique(airportCodename) && isAirportCodenameValid(airportCodename)) {
 				Airport airport = new Airport(airportCodename, airportFullname, airportType, airportCity, airportCountry);
 				listOfAirports.add(airport);
 			} else {
 				System.out.println("Data not unique or airport codename not valid");
 			}
+			
+			scan.close();
 		} catch (Exception e) {
 			System.out.println("Something went wrong!");
 			e.printStackTrace();
-		} finally {
-			scan.close();
-		}
+		} 
 
 	}
 
-	private boolean isAirportDataUnique() {
+	
+ public Airport getAirportFromCodename (String airportCodename) {
+		
+		for( int i=0; i<listOfAirports.size(); i++) {
+			String airportCodenameFromList = listOfAirports.get(i).getAirportCodename();
+			String airportFullnameFromList = listOfAirports.get(i).getAirportFullname();
+			String airportTypeFromList = listOfAirports.get(i).getAirportType();
+			String airportCityFromList = listOfAirports.get(i).getAirportCity();
+			String airportCountryFromList = listOfAirports.get(i).getAirportCountry();
+			if (airportCodenameFromList.equals(airportCodename)) {
+				Airport airport = new Airport(airportCodenameFromList, airportFullnameFromList, airportTypeFromList, airportCityFromList, airportCountryFromList);
+				return airport;
+				
+			}
+		}
+		
+		return null;
+		
+	}
+	private boolean isAirportDataUnique(String airportCodename) {
 
 		for (int i = 0; i < listOfAirports.size(); i++) {
 
@@ -63,7 +78,7 @@ public class AirportManagementSystem {
 		return true;
 	}
 
-	private boolean isAirportCodenameValid() {
+	private boolean isAirportCodenameValid(String airportCodename) {
 
 		if (airportCodename.length() == AIRPORT_CODENAME_LENGTH
 				&& airportCodename.chars().allMatch(Character::isLetter)) {

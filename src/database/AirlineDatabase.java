@@ -7,7 +7,7 @@
 	import java.sql.*;
 	import java.util.ArrayList;
 
-import objects.Airline;
+import models.Airline;
 
 
 	public class AirlineDatabase {

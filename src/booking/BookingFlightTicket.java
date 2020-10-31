@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import management.FlightManagementSystem;
-import objects.Flight;
+import models.Flight;
 
 public class BookingFlightTicket {
-
+/*
 	private Flight flight;
 	private FlightManagementSystem fms;
 	private ArrayList<Flight> listOfFlights = FlightManagementSystem.getListOfFlights();
@@ -80,5 +80,5 @@ public class BookingFlightTicket {
 	public static void setListOfBookedFlights(ArrayList<Flight> listOfBookedFlights) {
 		BookingFlightTicket.listOfBookedFlights = listOfBookedFlights;
 	}
-
+*/
 }

@@ -4,7 +4,8 @@
 	import java.sql.PreparedStatement;
 	import java.sql.*;
 	import java.util.ArrayList;
-	import objects.Airport;
+
+import models.Airport;
 
 	public class AirportDatabase {
 		

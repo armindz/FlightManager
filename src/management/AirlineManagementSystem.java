@@ -4,47 +4,40 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import database.AirlineDatabase;
-import objects.Airline;
+import models.Airline;
 
 public class AirlineManagementSystem {
 
-	Airline airline;
 	private static ArrayList<Airline> listOfAirlines = new ArrayList<Airline>();
 	AirlineDatabase airlinedatabase = new AirlineDatabase();
-	private String airlineCodename;
-	private String airlineCallsign;
-	private String airlineCountry;
 	final int AIRLINE_CODENAME_MAX_LENGTH = 6;
 
 	public void createAirline() {
 
-		Scanner scan = new Scanner(System.in);
 		try {
+			Scanner scan = new Scanner(System.in);
 			System.out.println("Please type airline codename!");
-			airlineCodename = scan.next();
+			String airlineCodename = scan.next();
 			System.out.println("Please type airline callsign!");
-			airlineCallsign = scan.next();
+			String airlineCallsign = scan.next();
 			System.out.println("Please type airline country!");
-			airlineCountry = scan.next();
+			String airlineCountry = scan.next();
 
-			
-
-			if (isAirlineDataUnique() && isAirlineCodenameValid()) {
+			if (isAirlineDataUnique(airlineCodename) && isAirlineCodenameValid(airlineCodename)) {
 				Airline airline = new Airline(airlineCodename, airlineCallsign, airlineCountry);
 				listOfAirlines.add(airline);
 			} else {
 				System.out.println("Data not unique or airline codename not valid.");
 			}
+			scan.close();
 		} catch (Exception e) {
 			System.out.println("Something went wrong");
 			e.printStackTrace();
-		} finally {
-			scan.close();
 		}
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
-	private boolean isAirlineDataUnique() {
+	private boolean isAirlineDataUnique(String airlineCodename) {
 
 		for (int i = 0; i < listOfAirlines.size(); i++) {
 
@@ -57,7 +50,24 @@ public class AirlineManagementSystem {
 		return true;
 	}
 
-	private boolean isAirlineCodenameValid() {
+	public Airline getAirlineFromCodename(String airlineCodename) {
+
+		for (int i = 0; i < listOfAirlines.size(); i++) {
+			String airlineCodenameFromList = listOfAirlines.get(i).getAirlineCodename();
+			String airlineCallsignFromList = listOfAirlines.get(i).getAirlineCallsign();
+			String airlineCountryFromList = listOfAirlines.get(i).getAirlineCountry();
+			if (airlineCodenameFromList.equals(airlineCodename)) {
+				Airline airline = new Airline(airlineCodenameFromList, airlineCallsignFromList, airlineCountryFromList);
+				return airline;
+
+			}
+		}
+
+		return null;
+
+	}
+
+	private boolean isAirlineCodenameValid(String airlineCodename) {
 
 		if (airlineCodename.length() < AIRLINE_CODENAME_MAX_LENGTH
 				&& airlineCodename.chars().allMatch(Character::isLetter)) {
@@ -83,12 +93,12 @@ public class AirlineManagementSystem {
 		return listOfAirlines;
 	}
 
-	public void addAirlineToDatabase() {
+	public void addAirlineToDatabase(Airline airline) {
 
 		airlinedatabase.storeToDatabase(airline);
 	}
 
-	public void removeAirlineFromDatabase() {
+	public void removeAirlineFromDatabase(Airline airline) {
 
 	}
 }

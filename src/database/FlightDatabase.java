@@ -3,10 +3,10 @@
 	import java.sql.*;
 	import java.util.ArrayList;
 
-import objects.Flight;
+import models.Flight;
 
 	public class FlightDatabase {
-		
+		/*
 		private static String statementToStoreDataIntoFlights = "INSERT INTO flights"
 				+ "(flightID, Airline, Airport_Codename, Flightclass, Date_of_flight, seatRow, seatNumber, flight_Price) values " + " (?,?,?,?,?,?,?,?);";
 		private static String statementToDisplayDataOfFlights = "SELECT * FROM flights";
@@ -66,7 +66,7 @@ import objects.Flight;
 
 			return 0;
 
-		}
+		}*/
 	}
 
 

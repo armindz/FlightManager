@@ -5,50 +5,41 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import booking.BookingFlightTicket;
-
-import objects.Flight;
 import database.AirlineDatabase;
 import database.AirportDatabase;
 import database.FlightDatabase;
+import models.Airline;
+import models.Flight;
+import models.Seat;
 
 public class FlightManagementSystem {
 
-	private Flight flight;
 	private static ArrayList<Flight> listOfFlights = new ArrayList<Flight>();
-	private static ArrayList<Flight> listOfAvailableFlights = new ArrayList<Flight>();
-	private static ArrayList<Flight> listOfBookedFlights = BookingFlightTicket.getListOfBookedFlights();
+	private ArrayList<Seat> listOfSeats = new ArrayList<Seat>();
+//	private static ArrayList<Flight> listOfBookedFlights = BookingFlightTicket.getListOfBookedFlights();
 	AirlineManagementSystem airlinems = new AirlineManagementSystem();
 	AirportManagementSystem airportms = new AirportManagementSystem();
+
 	FlightDatabase fd = new FlightDatabase();
-	private String airlineCodename;
-	private String airportCodename;
-	private String destinationAirportCodename;
-	private String flightClass;
-	private Calendar dateOfFlight;
-	private char seatRow;
-	private int seatNumber;
-	private double flightPrice;
-	private int flightId = Flight.getFlight_id();
 
 	public void createFlight() {
 
-		Scanner scan = new Scanner(System.in);
 		try {
-
+			Scanner scan = new Scanner(System.in);
 			System.out.println("Please type airline codename!");
-			airlineCodename = scan.next();
+			String airlineCodename = scan.next();
 			System.out.println("Please type airport codename!");
-			airportCodename = scan.next();
+			String airportCodename = scan.next();
 			System.out.println("Please type destination airport codename!");
-			destinationAirportCodename = scan.next();
+			String destinationAirportCodename = scan.next();
 			System.out.println("Please type flight class!");
-			flightClass = scan.next();
+			String flightClass = scan.next();
 			System.out.println("Please type seat row!");
-			seatRow = scan.next().charAt(0);
+			char flightSeatRows = scan.next().charAt(0);
 			System.out.println("Please type seat number!");
-			seatNumber = scan.nextInt();
+			int flightNumberOfSeatsPerRow = scan.nextInt();
 			System.out.println("Please type flight price!");
-			flightPrice = scan.nextDouble();
+			double flightPrice = scan.nextDouble();
 			System.out.println("Please type date of flight!");
 			System.out.println("YEAR");
 			int year = scan.nextInt();
@@ -60,25 +51,39 @@ public class FlightManagementSystem {
 			int hourOfDay = scan.nextInt();
 			System.out.println("MIN");
 			int minute = scan.nextInt();
-			dateOfFlight = Calendar.getInstance();
+			Calendar dateOfFlight = Calendar.getInstance();
 			dateOfFlight.set(year, month - 1, day, hourOfDay, minute);
 			System.out.println(dateOfFlight.getTime());
-			Flight flight = new Flight(airlineCodename, airportCodename, destinationAirportCodename, flightClass,
-					dateOfFlight, seatRow, seatNumber, flightPrice);
-			
-			if (isFlightDataUnique(flight) && isSeatRowValid(seatRow) && isAirlineCodenameValid(airlineCodename)
+
+			Flight flight = new Flight(airlinems.getAirlineFromCodename(airlineCodename),
+					airportms.getAirportFromCodename(airportCodename),
+					airportms.getAirportFromCodename(destinationAirportCodename), flightClass, dateOfFlight,
+					flightSeatRows, flightNumberOfSeatsPerRow, flightPrice);
+
+			if (isFlightDataUnique(flight) && isSeatRowValid(flightSeatRows) && isAirlineCodenameValid(airlineCodename)
 					&& isAirportCodenameValid(airportCodename) && isAirportCodenameValid(destinationAirportCodename)) {
 				listOfFlights.add(flight);
+				createSeats(flight, flightSeatRows, flightNumberOfSeatsPerRow);
 			} else {
 				System.out.println("Data is not unique or seat row not valid.");
 			}
+			scan.close();
 		} catch (Exception e) {
 			System.out.println("Something went wrong");
 			e.printStackTrace();
 		}
+	}
 
-		finally {
-			scan.close();
+	
+
+	private void createSeats(Flight flight, char seatRow, int numberOfSeatsPerRow) {
+
+		for (int i = 'A'; i <= seatRow; i++) { // int i=65
+			for (int j = 1; j <= numberOfSeatsPerRow; j++) {
+				char seatRows = (char) i;
+				Seat seat = new Seat(Flight.getFlight_id(), seatRows, j, true);
+				flight.addToListOfSeats(seat);
+			}
 		}
 	}
 
@@ -92,7 +97,7 @@ public class FlightManagementSystem {
 	}
 
 	private boolean isAirlineCodenameValid(String airlineCodename) {
-		for (int i = 1; i < airlinems.getListOfAirlines().size(); i++) {
+		for (int i = 0; i < airlinems.getListOfAirlines().size(); i++) {
 			String airlineCodenameFromList = airlinems.getListOfAirlines().get(i).getAirlineCodename();
 			if (airlineCodenameFromList.equals(airlineCodename)) {
 				return true;
@@ -103,7 +108,7 @@ public class FlightManagementSystem {
 	}
 
 	private boolean isAirportCodenameValid(String airportCodename) {
-		for (int i = 1; i < airportms.getListOfAirports().size(); i++) {
+		for (int i = 0; i < airportms.getListOfAirports().size(); i++) {
 			String airportCodenameFromList = airportms.getListOfAirports().get(i).getAirportCodename();
 			if (airportCodenameFromList.equals(airportCodename)) {
 				return true;
@@ -134,36 +139,21 @@ public class FlightManagementSystem {
 
 	}
 
-	public void removeFlightFromAvailableFlights(int flightId) {
-		for (int i = 0; i < listOfAvailableFlights.size(); i++) {
-			listOfAvailableFlights.get(i);
-			int flightIdFromList = Flight.getFlight_id();
-
-			if (flightIdFromList == flightId) {
-				// listOfBookedFlights.add(i, flight);
-				listOfAvailableFlights.remove(i);
-			}
-		}
-
-	}
-
 	public static ArrayList<Flight> getListOfFlights() {
 
 		return listOfFlights;
 	}
-
-	public static ArrayList<Flight> getListOfAvailableFlights() {
-		return listOfAvailableFlights;
+	public ArrayList<Seat> getListOfSeats() {
+		return listOfSeats;
 	}
 
-	public static void setListOfAvailableFlights(ArrayList<Flight> listOfAvailableFlights) {
-		FlightManagementSystem.listOfAvailableFlights = listOfAvailableFlights;
+	public void setListOfSeats(ArrayList<Seat> listOfSeats) {
+		this.listOfSeats = listOfSeats;
 	}
-
 	public void addFlightToDatabase(Flight flight) {
-		
-		fd.storeToDatabase(flight);
-		
+
+//		fd.storeToDatabase(flight);
+
 	}
 
 	public void removeFlightFromDatabase() {
