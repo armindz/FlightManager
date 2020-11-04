@@ -1,13 +1,14 @@
 package models;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import models.Seat;
+import database.FlightDatabase;
 
 public class Flight {
 	private ArrayList<Seat> listOfSeats = new ArrayList<Seat>();
-	
 
 	private Airline airline;
 	private Airport airport;
@@ -17,10 +18,11 @@ public class Flight {
 	private char seatRow;
 	private int seatNumber;
 	private double flightPrice;
-	private static int flightId = 0;
-	
-	public Flight (Airline airline, Airport airport, Airport destinationAirport, String flightClass, Calendar dateOfFlight, char seatRow, int seatNumber, double flightPrice) {
-		
+	private static int flightId = FlightDatabase.generateFlightId();
+
+	public Flight(Airline airline, Airport airport, Airport destinationAirport, String flightClass,
+			Calendar dateOfFlight, char seatRow, int seatNumber, double flightPrice) {
+
 		this.airline = airline;
 		this.airport = airport;
 		this.destinationAirport = destinationAirport;
@@ -29,10 +31,39 @@ public class Flight {
 		this.seatRow = seatRow;
 		this.seatNumber = seatNumber;
 		this.flightPrice = flightPrice;
-		flightId++;
 	}
 
+	public Airline getAirline() {
+		return airline;
+	}
 
+	public void setAirline(Airline airline) {
+		this.airline = airline;
+	}
+
+	public Airport getAirport() {
+		return airport;
+	}
+
+	public void setAirport(Airport airport) {
+		this.airport = airport;
+	}
+
+	public Airport getDestinationAirport() {
+		return destinationAirport;
+	}
+
+	public void setDestinationAirport(Airport destinationAirport) {
+		this.destinationAirport = destinationAirport;
+	}
+
+	public static int getFlightId() {
+		return flightId;
+	}
+
+	public static void setFlightId(int flightId) {
+		Flight.flightId = flightId;
+	}
 
 	public static int getFlight_id() {
 		return flightId;
@@ -52,6 +83,11 @@ public class Flight {
 
 	public Calendar getDateOfFlight() {
 		return dateOfFlight;
+	}
+
+	public Timestamp getDateOfFlightInDateTime(Calendar dateOfFlight) {
+		Timestamp timestamp = new Timestamp(dateOfFlight.getTimeInMillis());
+		return timestamp;
 	}
 
 	public void setDateOfFlight(Calendar dateOfFlight) {
@@ -82,29 +118,25 @@ public class Flight {
 		this.flightPrice = flightPrice;
 	}
 
-
 	public ArrayList<Seat> getListOfSeats() {
 		return listOfSeats;
 	}
 
-	public void addToListOfSeats (Seat seat) {
-		
+	public void addToListOfSeats(Seat seat) {
+
 		listOfSeats.add(seat);
 	}
 
 	@Override
 	public String toString() {
-		return "Flight [listOfSeats=" + listOfSeats + ", airline=" + airline + ", airport=" + airport
-				+ ", destinationAirport=" + destinationAirport + ", flightClass=" + flightClass + ", dateOfFlight="
-				+ dateOfFlight + ", seatRow=" + seatRow + ", seatNumber=" + seatNumber + ", flightPrice=" + flightPrice
-				+ "]";
+		return "\n\n\t Flight \n[ |\n Airline  :  " + airline + "\n Airport  :  " + airport
+				+ "\n Destination airport  :  " + destinationAirport + "\n Flight class  :  " + flightClass
+				+ "\t Date of flight  :  " + dateOfFlight.getTime() + "\n Maximum seat row  :  " + seatRow
+				+ "\t Number of seats per row :  " + seatNumber + "\t Flight price  :  " + flightPrice + "|\n\n\n";
 	}
-
-
 
 	public void setListOfSeats(ArrayList<Seat> listOfSeats) {
 		this.listOfSeats = listOfSeats;
 	}
 
-	
 }

@@ -1,84 +1,48 @@
 package booking;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import database.SeatDatabase;
 
 import management.FlightManagementSystem;
-import models.Flight;
+
+import models.Seat;
 
 public class BookingFlightTicket {
-/*
-	private Flight flight;
-	private FlightManagementSystem fms;
-	private ArrayList<Flight> listOfFlights = FlightManagementSystem.getListOfFlights();
-	private ArrayList<Flight> listOfAvailableFlights = FlightManagementSystem.getListOfAvailableFlights();
-	private static ArrayList<Flight> listOfBookedFlights = new ArrayList<>();
+
+	FlightManagementSystem flightms = new FlightManagementSystem();
+	SeatDatabase seatdb = new SeatDatabase();
+	private ArrayList<Seat> listOfSeats = flightms.getListOfSeats();
+	
 
 	public void bookAFlight(int flightId, String flightClass, char seatRow, int seatNumber) {
 
-		if (isFlightAvailable(flightId, flightClass, seatRow, seatNumber)) {
-			addToBookedFlightsList(flightId);
+		if (isSeatAvailable(flightId, seatRow, seatNumber)) {
+			flightms.markSeatAsUnavailable(flightId, seatRow, seatNumber);
 			System.out.println("Successfully booked!");
 
 		} else {
-			System.out.println("Problem with booking a flight. Be aware of typing mistakes! ");
+			System.out.println("Problem with booking a flight. Seat is not available. Be aware of typing mistakes! ");
 		}
 	}
 
-	private boolean isFlightAvailable(int flightId, String flightClass, char seatRow, int seatNumber) {
+	public boolean isSeatAvailable(int flightId, char seatRow, int seatNumber) {
 
-		for (int i = 0; i < listOfAvailableFlights.size(); i++) {
-			listOfAvailableFlights.get(i);
-			int flightIdFromList = listOfAvailableFlights.get(i).getFlight_id();
-			System.out.println( listOfAvailableFlights.get(i).getFlight_id());
-			String flightClassFromList = listOfAvailableFlights.get(i).getFlightClass();
-			char seatRowFromList = listOfAvailableFlights.get(i).getSeatRow();
-			int seatNumberFromList = listOfAvailableFlights.get(i).getSeatRow();
-			if ((flightIdFromList == flightId) && (flightClass.equals(flightClassFromList))
-					&& (seatRow != seatRowFromList) && (seatNumber != seatNumberFromList)) {
+		seatdb.fetchDatabaseContent(listOfSeats);
+		for (int i = 0; i < listOfSeats.size(); i++) {
+
+			int flightIdFromList = listOfSeats.get(i).getFlightId();
+			char seatRowFromList = listOfSeats.get(i).getSeatRow();
+			int seatNumberFromList = listOfSeats.get(i).getSeatNumber();
+			boolean isSeatAvailableFromList = listOfSeats.get(i).isSeatAvailable();
+
+			if ((flightIdFromList == flightId) && (seatRow == seatRowFromList) && (seatNumber == seatNumberFromList)
+					&& (isSeatAvailableFromList)) {
 				return true;
-			} else {
-				System.out.println("Seat is not available");
 			}
-
 		}
+
 		return false;
 	}
 
-	public void addToBookedFlightsList(int flightId) {
-
-		for (int i = 0; i < listOfAvailableFlights.size(); i++) {
-			listOfAvailableFlights.get(i);
-			int flightIdFromList = Flight.getFlight_id();
-
-			if (flightIdFromList == flightId) {
-				listOfBookedFlights.add(i, flight);
-				fms.removeFlightFromAvailableFlights(flightId);
-			}
-		}
-	}
-	
-	public void displayAvailableSeatsInFlight (int flightId) {
-		
-
-		for (int i = 0; i < listOfAvailableFlights.size(); i++) {
-			listOfAvailableFlights.get(i);
-			int flightIdFromList = listOfAvailableFlights.get(i).getFlight_id();
-
-			if (flightIdFromList == flightId) {
-				System.out.println("Flight class:" + listOfAvailableFlights.get(i).getFlightClass());
-				System.out.println("Seat row:" + listOfAvailableFlights.get(i).getSeatRow());
-				System.out.println("Seat number:" + listOfAvailableFlights.get(i).getSeatNumber());
-			}
-	}
-	}
-
-	public static ArrayList<Flight> getListOfBookedFlights() {
-		return listOfBookedFlights;
-	}
-
-	public static void setListOfBookedFlights(ArrayList<Flight> listOfBookedFlights) {
-		BookingFlightTicket.listOfBookedFlights = listOfBookedFlights;
-	}
-*/
 }

@@ -3,22 +3,25 @@ package management;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.crypto.AEADBadTagException;
+
 import database.AirportDatabase;
 import models.Airline;
 import models.Airport;
 
 public class AirportManagementSystem {
 	
+	Airport airport;
 	private static ArrayList<Airport> listOfAirports = new ArrayList<Airport>();
-	AirportDatabase ad = new AirportDatabase();
+	AirportDatabase airportdb = new AirportDatabase();
 	private final int AIRPORT_CODENAME_LENGTH = 3;
-
+	
 	public void createAirport() {
-
 		
+		Scanner scan = new Scanner(System.in);
 
 		try {
-			Scanner scan = new Scanner(System.in);
+			
 			System.out.println("Please type airport codename!");
 			String airportCodename = scan.next();
 			System.out.println("Please type airport fullname!");
@@ -29,16 +32,18 @@ public class AirportManagementSystem {
 			String airportCity = scan.next();
 			System.out.println("Please type airport country!");
 			String airportCountry = scan.next();
-
+		
 			
 			if (isAirportDataUnique(airportCodename) && isAirportCodenameValid(airportCodename)) {
-				Airport airport = new Airport(airportCodename, airportFullname, airportType, airportCity, airportCountry);
+			 airport = new Airport(airportCodename, airportFullname, airportType, airportCity, airportCountry);
 				listOfAirports.add(airport);
+				addAirportToDatabase(airport);
+				System.out.println("Airport successfully created!");
 			} else {
 				System.out.println("Data not unique or airport codename not valid");
 			}
 			
-			scan.close();
+			
 		} catch (Exception e) {
 			System.out.println("Something went wrong!");
 			e.printStackTrace();
@@ -48,7 +53,8 @@ public class AirportManagementSystem {
 
 	
  public Airport getAirportFromCodename (String airportCodename) {
-		
+	  
+	 fetchDatabaseContentToList();
 		for( int i=0; i<listOfAirports.size(); i++) {
 			String airportCodenameFromList = listOfAirports.get(i).getAirportCodename();
 			String airportFullnameFromList = listOfAirports.get(i).getAirportFullname();
@@ -66,7 +72,8 @@ public class AirportManagementSystem {
 		
 	}
 	private boolean isAirportDataUnique(String airportCodename) {
-
+		
+		fetchDatabaseContentToList();
 		for (int i = 0; i < listOfAirports.size(); i++) {
 
 			String airportCodenameFromList = listOfAirports.get(i).getAirportCodename();
@@ -103,13 +110,20 @@ public class AirportManagementSystem {
 		}
 
 	}
-
-	public void addAirportToDatabase(Airport airport) {
-
-		ad.storeToDatabase(airport);
+	public ArrayList <Airport> fetchDatabaseContentToList () {
+		airportdb.fetchDatabaseContent(listOfAirports);
+		return listOfAirports;
 	}
+	private void addAirportToDatabase(Airport airport) {
 
+		airportdb.storeToDatabase(airport);
+	}
+	private void addAirportToDatabase() {
+
+		airportdb.storeToDatabase(airport);
+	}
+	
 	public void removeAirportFromDatabase() {
-
+		airportdb.deleteContentFromDatabase(airport.getAirportCodename());
 	}
 }

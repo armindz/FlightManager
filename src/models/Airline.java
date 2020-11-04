@@ -47,8 +47,8 @@ public class Airline {
 
 	@Override
 	public String toString() {
-		return "Airline [airlineCodename=" + airlineCodename + ", airlineCallsign=" + airlineCallsign
-				+ ", airlineCountry=" + airlineCountry + "]";
+		return "\n|Airline codename :  " + airlineCodename + "\n Airline callsign :  " + airlineCallsign
+				+ "\n Airline country :  " + airlineCountry + "|\n";
 	}
 	
 	
