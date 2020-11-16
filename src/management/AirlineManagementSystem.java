@@ -8,7 +8,7 @@ import models.Airline;
 
 public class AirlineManagementSystem {
 	
-	Airline airline;
+
 	private static ArrayList<Airline> listOfAirlines = new ArrayList<Airline>();
 	AirlineDatabase airlinedb = new AirlineDatabase();
 	final int AIRLINE_CODENAME_MAX_LENGTH = 6;
@@ -26,8 +26,7 @@ public class AirlineManagementSystem {
 			String airlineCountry = scan.next();
 		
 			if (isAirlineDataUnique(airlineCodename) && isAirlineCodenameValid(airlineCodename)) {
-				airline = new Airline(airlineCodename, airlineCallsign, airlineCountry);
-				listOfAirlines.add(airline);
+				Airline airline = new Airline(airlineCodename, airlineCallsign, airlineCountry);
 				addAirlineToDatabase(airline);
 				System.out.println("Airline successfully created!");
 			} else {
@@ -42,12 +41,13 @@ public class AirlineManagementSystem {
 
 	private boolean isAirlineDataUnique(String airlineCodename) {
 
-		fetchDatabaseContentToList();
+		ArrayList <Airline> listOfAirlines = fetchDatabaseContentToList();
+		
 		for (int i = 0; i < listOfAirlines.size(); i++) {
 
 			String airlineCodenameFromList = listOfAirlines.get(i).getAirlineCodename();
 			if ((!listOfAirlines.isEmpty()) && (airlineCodenameFromList.equals(airlineCodename))) {
-
+				System.out.println("Airline data not unique");
 				return false;
 			}
 		}
@@ -56,7 +56,8 @@ public class AirlineManagementSystem {
 
 	public Airline getAirlineFromCodename(String airlineCodename) {
 		
-		fetchDatabaseContentToList();
+		ArrayList <Airline> listOfAirlines = fetchDatabaseContentToList();
+		
 		for (int i = 0; i < listOfAirlines.size(); i++) {
 			String airlineCodenameFromList = listOfAirlines.get(i).getAirlineCodename();
 			String airlineCallsignFromList = listOfAirlines.get(i).getAirlineCallsign();
@@ -78,33 +79,21 @@ public class AirlineManagementSystem {
 				&& airlineCodename.chars().allMatch(Character::isLetter)) {
 			return true;
 		}
-		return false;
-	}
-
-	/*public void removeAirlineFromArrayList(String airlineCodename) {
-
-		for (int i = 0; i < listOfAirlines.size(); i++) {
-			String airlineCodenameFromList = listOfAirlines.get(i).getAirlineCodename();
-
-			if (airlineCodenameFromList.equals(airlineCodename)) {
-				listOfAirlines.remove(i);
-			}
+		else {
+			System.out.println("Airline codename not valid!");
+			return false;
 		}
-
+		
 	}
-*/
+
 	public ArrayList<Airline> getListOfAirlines() {
 		
-		return listOfAirlines;
+		return fetchDatabaseContentToList();
 	}
 
-	public void addAirlineToDatabase() {
-
-		airlinedb.storeToDatabase(airline);
-	}
 	public ArrayList <Airline> fetchDatabaseContentToList () {
-		airlinedb.fetchDatabaseContent(listOfAirlines);
-		return listOfAirlines;
+		
+		return airlinedb.fetchDatabaseContent();
 	}
 	private void addAirlineToDatabase(Airline airline) {
 		airlinedb.storeToDatabase(airline);

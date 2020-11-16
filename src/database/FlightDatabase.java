@@ -81,8 +81,9 @@ public class FlightDatabase {
 		return 0;
 	}
 
-	public ArrayList<Flight> fetchDatabaseContent(ArrayList<Flight> flights) { // mechanism for fetching content from database and returning as ArrayList
-																				
+	public ArrayList<Flight> fetchDatabaseContent() { // mechanism for fetching content from database and returning as ArrayList
+				
+		ArrayList<Flight> flights = new ArrayList<>();
 		try {
 			
 			Connection conn = DatabaseConnection.getConnection();
@@ -96,7 +97,7 @@ public class FlightDatabase {
 				Timestamp timestamp = rset.getTimestamp("Date_of_flight");
 				cal.setTime(timestamp);
 				
-				Flight flight = new Flight(airlinems.getAirlineFromCodename(rset.getString("AirlineCodename")),
+				Flight flight = new Flight(rset.getInt("flight_ID"), airlinems.getAirlineFromCodename(rset.getString("AirlineCodename")),
 						airportms.getAirportFromCodename(rset.getString("Airport_Codename")),
 						airportms.getAirportFromCodename(rset.getString("destinationAirport")),
 						rset.getString("Flightclass"), cal, rset.getString("seatRow").charAt(0),

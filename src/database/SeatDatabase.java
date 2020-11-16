@@ -13,7 +13,7 @@ public class SeatDatabase {
 	private static String statementToDeleteDataFromSeats = "DELETE from seats where flight_ID=?";
 
 	public void storeToDatabase(Seat seat) {
-		
+
 		try {
 
 			Connection conn = DatabaseConnection.getConnection();
@@ -37,19 +37,21 @@ public class SeatDatabase {
 
 	}
 
-	public ArrayList<Seat> fetchDatabaseContent(ArrayList<Seat> seats) { // mechanism for fetching content from database and returning as ArrayList
-		
+	public ArrayList<Seat> fetchDatabaseContent() { // mechanism for fetching content from database and returning as
+													// ArrayList
+
+		ArrayList<Seat> seats = new ArrayList<>();
 		try {
-			
+
 			Connection conn = DatabaseConnection.getConnection();
 			Statement stmt = conn.createStatement();
 			ResultSet rset = stmt.executeQuery(statementToDisplayDataOfSeats);
-			seats.clear();
+
 			while (rset.next()) {
 
 				Seat seat = new Seat(rset.getInt("flight_ID"), rset.getString("seatRow").charAt(0),
 						rset.getInt("seatNumber"), rset.getBoolean("isSeatAvailable"));
-				
+
 				seats.add(seat);
 			}
 		}
@@ -63,26 +65,28 @@ public class SeatDatabase {
 
 	}
 
-	public void updateDatabaseContent(int FlightID, char seatRow, int seatNumber, boolean isSeatAvailable) { // mechanism for updating database content
+	public void updateDatabaseContent(int FlightID, char seatRow, int seatNumber, boolean isSeatAvailable) { // mechanism
+																												// for
+																												// updating
+																												// database
+																												// content
 
 		try {
 
 			Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement preparedStmt = conn.prepareStatement(statementToUpdateSeatsData);
-			
-			
-			preparedStmt.setBoolean(1, isSeatAvailable);  // update isSeatAvailable column
-			preparedStmt.setInt(2, FlightID);   // where Flight_ID 
+
+			preparedStmt.setBoolean(1, isSeatAvailable); // update isSeatAvailable column
+			preparedStmt.setInt(2, FlightID); // where Flight_ID
 			preparedStmt.setString(3, String.valueOf(seatRow)); // where seatRow
-			preparedStmt.setInt(4, seatNumber);  // where seatNumber
-			
-			
+			preparedStmt.setInt(4, seatNumber); // where seatNumber
+
 			preparedStmt.executeUpdate();
 
 			conn.close();
 			preparedStmt.close();
-		} 
-		
+		}
+
 		catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -96,13 +100,13 @@ public class SeatDatabase {
 			Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement preparedStmt = conn.prepareStatement(statementToDeleteDataFromSeats);
 
-			preparedStmt.setInt(1, flight_ID); 
+			preparedStmt.setInt(1, flight_ID);
 			preparedStmt.executeUpdate();
 
 			conn.close();
 			preparedStmt.close();
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}

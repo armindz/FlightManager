@@ -18,9 +18,9 @@ public class Flight {
 	private char seatRow;
 	private int seatNumber;
 	private double flightPrice;
-	private static int flightId = FlightDatabase.generateFlightId();
+	private int flightId = FlightDatabase.generateFlightId();
 
-	public Flight(Airline airline, Airport airport, Airport destinationAirport, String flightClass,
+	public Flight(int flightId, Airline airline, Airport airport, Airport destinationAirport, String flightClass,
 			Calendar dateOfFlight, char seatRow, int seatNumber, double flightPrice) {
 
 		this.airline = airline;
@@ -31,6 +31,7 @@ public class Flight {
 		this.seatRow = seatRow;
 		this.seatNumber = seatNumber;
 		this.flightPrice = flightPrice;
+		this.flightId = flightId;
 	}
 
 	public Airline getAirline() {
@@ -57,20 +58,20 @@ public class Flight {
 		this.destinationAirport = destinationAirport;
 	}
 
-	public static int getFlightId() {
+	public int getFlightId() {
 		return flightId;
 	}
 
-	public static void setFlightId(int flightId) {
-		Flight.flightId = flightId;
+	public void setFlightId(int flightId) {
+		this.flightId = flightId;
 	}
 
-	public static int getFlight_id() {
+	public  int getFlight_id() {
 		return flightId;
 	}
 
-	public static void setFlight_id(int flight_id) {
-		Flight.flightId = flight_id;
+	public  void setFlight_id(int flight_id) {
+		this.flightId = flight_id;
 	}
 
 	public String getFlightClass() {
@@ -129,10 +130,10 @@ public class Flight {
 
 	@Override
 	public String toString() {
-		return "\n\n\t Flight \n[ |\n Airline  :  " + airline + "\n Airport  :  " + airport
+		return "\n\n\n" + "\n Flight ID: " + flightId + " |\n Airline  :  "  + airline + "\n Airport  :  " + airport
 				+ "\n Destination airport  :  " + destinationAirport + "\n Flight class  :  " + flightClass
-				+ "\t Date of flight  :  " + dateOfFlight.getTime() + "\n Maximum seat row  :  " + seatRow
-				+ "\t Number of seats per row :  " + seatNumber + "\t Flight price  :  " + flightPrice + "|\n\n\n";
+				+ "\n Date of flight  :  " + dateOfFlight.getTime() + "\n Maximum seat row  :  " + seatRow
+				+ "\n Number of seats per row :  " + seatNumber + "\n Flight price  :  " + flightPrice + "KM|\n\n\n --------------------------------- \n";
 	}
 
 	public void setListOfSeats(ArrayList<Seat> listOfSeats) {

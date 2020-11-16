@@ -72,7 +72,7 @@ public class Airport {
 
 	@Override
 	public String toString() {
-		return "Airport \n | Airport codename :  " + airportCodename + "\n AirportFullname :  " + airportFullname + "\n Airport type :  "
+		return "\n | Airport codename :  " + airportCodename + "\n AirportFullname :  " + airportFullname + "\n Airport type :  "
 				+ airportType + "\n Airport city :  " + airportCity + "\n Airport country  :  " + airportCountry + "|\n";
 	}
 	

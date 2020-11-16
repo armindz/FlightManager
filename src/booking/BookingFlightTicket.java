@@ -28,7 +28,7 @@ public class BookingFlightTicket {
 
 	public boolean isSeatAvailable(int flightId, char seatRow, int seatNumber) {
 
-		seatdb.fetchDatabaseContent(listOfSeats);
+		ArrayList <Seat> listOfSeats = seatdb.fetchDatabaseContent();
 		for (int i = 0; i < listOfSeats.size(); i++) {
 
 			int flightIdFromList = listOfSeats.get(i).getFlightId();

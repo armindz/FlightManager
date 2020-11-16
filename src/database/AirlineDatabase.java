@@ -36,8 +36,9 @@ public class AirlineDatabase {
 		}
 	}
 
-	public ArrayList<Airline> fetchDatabaseContent(ArrayList<Airline> airlines) { // mechanism for fetching content from database and returning as ArrayList
+	public ArrayList<Airline> fetchDatabaseContent() { // mechanism for fetching content from database and returning as ArrayList
 	
+		ArrayList<Airline> airlines = new ArrayList<>();
 		try {
 			
 			Connection conn = DatabaseConnection.getConnection();

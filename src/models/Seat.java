@@ -58,7 +58,7 @@ public void setSeatAvailable(boolean isSeatAvailable) {
 
 @Override
 public String toString() {
-	return "|Seat row   :  " + seatRow + "\t| Seat number  :  " + seatNumber + "\t| Seat available(true/false)  :  " + isSeatAvailable + "|\n";
+	return "|Row   :  " + seatRow + "\t| Number  :  " + seatNumber + "\t| " + isSeatAvailable + "|\n";
 }
 
 
